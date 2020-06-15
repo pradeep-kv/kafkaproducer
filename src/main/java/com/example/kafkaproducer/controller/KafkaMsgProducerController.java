@@ -1,6 +1,5 @@
 package com.example.kafkaproducer.controller;
 
-import com.example.kafkaproducer.configuration.ProducerAdminClient;
 import com.example.kafkaproducer.model.FixMsgModel;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.ListTopicsResult;
@@ -25,9 +24,6 @@ public class KafkaMsgProducerController {
 
     @Autowired
     private KafkaTemplate<String, FixMsgModel> kafkaFixTemplate;
-
-    @Autowired
-    private ProducerAdminClient producerAdminClient;
 
     @RequestMapping("/test")
     public String testMsg(){
