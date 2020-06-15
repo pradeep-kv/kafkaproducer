@@ -52,6 +52,7 @@ public class KafkaMsgProducerController {
         FixMsgModel fixMsgModel = new FixMsgModel();
         fixMsgModel.setFixMsgName(msg);
         fixMsgModel.setFixMsgType(Long.toString(new Date().getTime()));
+        fixMsgModel.setCurrentDate(new Date().getTime());
         ListenableFuture<SendResult<String, FixMsgModel>> future = kafkaFixTemplate.send("msgTopic", fixMsgModel);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, FixMsgModel>>() {
