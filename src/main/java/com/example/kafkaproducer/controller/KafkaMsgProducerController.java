@@ -29,6 +29,11 @@ public class KafkaMsgProducerController {
     @Autowired
     private ProducerAdminClient producerAdminClient;
 
+    @RequestMapping("/test")
+    public String testMsg(){
+        return "Working";
+    }
+
     @RequestMapping("/sendMsg/{msg}")
     public void sendMsg(@PathVariable String msg) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send("testTopic", msg);
@@ -64,18 +69,5 @@ public class KafkaMsgProducerController {
                 System.out.println("Msg sent Successfully - " + fixMsgModel.toString() + " - with the following result - " + result.toString());
             }
         });
-    }
-
-    @RequestMapping("/deleteTopic/{topicName}")
-    public void deleteTopic(@PathVariable String topicName) throws ExecutionException, InterruptedException {
-        AdminClient client = producerAdminClient.getAdminClient();
-        ListTopicsResult listTopicsResult = client.listTopics();
-        Set<String> listOfTopics = listTopicsResult.names().get();
-        System.out.println(listOfTopics.toString());
-        if(listOfTopics.contains(topicName)){
-            Set<String> set =  new HashSet<>();
-            set.add(topicName);
-            client.deleteTopics(set);
-        }
     }
 }
