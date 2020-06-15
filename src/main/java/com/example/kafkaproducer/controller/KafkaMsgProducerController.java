@@ -47,8 +47,8 @@ public class KafkaMsgProducerController {
         });
     }
 
-    @RequestMapping("/sendFixMsg/{msg}/{type}")
-    public void sendFixMsg(@PathVariable String msg, @PathVariable String type) {
+    @RequestMapping("/sendFixMsg/{msg}")
+    public void sendFixMsg(@PathVariable String msg) {
         FixMsgModel fixMsgModel = new FixMsgModel();
         fixMsgModel.setFixMsgName(msg);
         fixMsgModel.setFixMsgType(Long.toString(new Date().getTime()));
@@ -65,5 +65,17 @@ public class KafkaMsgProducerController {
                 System.out.println("Msg sent Successfully - " + fixMsgModel.toString() + " - with the following result - " + result.toString());
             }
         });
+    }
+
+    @RequestMapping("sendBulkMsg/{msgCount}")
+    public void sendBulkMsg(@PathVariable int msgCount){
+        if(msgCount <= 0){
+            return;
+        }
+        for (int i = 0; i< msgCount; i++){
+            this.sendFixMsg(Integer.toString(i));
+        }
+        return;
+
     }
 }
